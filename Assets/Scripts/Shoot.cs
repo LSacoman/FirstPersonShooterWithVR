@@ -5,22 +5,19 @@ using UnityEngine;
 public class Shoot : MonoBehaviour {
 
     public GameObject bulletSpawn;
-
     private bool isShooting;
-	// Use this for initialization
+
 	void Start () {
         isShooting= false;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         RaycastHit hit;
         Debug.DrawRay(bulletSpawn.transform.position, bulletSpawn.transform.forward, Color.green);
 
         if(Physics.Raycast(bulletSpawn.transform.position, bulletSpawn.transform.forward, out hit, 100)){
             if (hit.collider.name.Contains("zombie")){
-                if (!isShooting)
-                {
+                if (!isShooting){
                     StartCoroutine("Fire");
                 }
             }
@@ -40,7 +37,7 @@ public class Shoot : MonoBehaviour {
 
         Destroy(bullet, 1f);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         isShooting = false;
     }
 }

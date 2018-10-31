@@ -16,8 +16,8 @@ public class ZombieWalk : MonoBehaviour {
 	}
 	
 
-    void OnTriggerEnter(Collider other)
-    {
+    void OnTriggerEnter(Collider other){
+
         GetComponent<SphereCollider>().enabled = false;
         Destroy(other.gameObject);
 
@@ -26,17 +26,16 @@ public class ZombieWalk : MonoBehaviour {
         GetComponent<Animation>().Play("back_fall");
         Destroy(gameObject, 6f);
         GameObject zombie = Instantiate(Resources.Load("zombie", typeof(GameObject))) as GameObject;
+        GetNewPosition(zombie);
+
+        while(Vector3.Distance(zombie.transform.position, target.position) <= 5){
+            GetNewPosition(zombie);
+        }
+    }
+
+    void GetNewPosition(GameObject zombie){
         float randomX = UnityEngine.Random.Range(-12, 12);
         float randomZ = UnityEngine.Random.Range(-12, 12);
-
         zombie.transform.position = new Vector3(randomX, 0.1f, randomZ);
-
-        while(Vector3.Distance(zombie.transform.position, target.position) <= 3)
-        {
-            randomX = UnityEngine.Random.Range(-12, 12);
-            randomZ = UnityEngine.Random.Range(-12, 12);
-
-            zombie.transform.position = new Vector3(randomX, 0.1f, randomZ);
-        }
     }
 }
